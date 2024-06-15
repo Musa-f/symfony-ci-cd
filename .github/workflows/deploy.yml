@@ -21,7 +21,5 @@ jobs:
           password: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            cd /var/www/symfony-ci-cd/docker
-            docker-compose pull
-            docker-compose down
+            docker pull alievna/symfony:latest
             docker-compose up -d
