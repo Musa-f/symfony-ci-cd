@@ -18,10 +18,6 @@ RUN cd /var/www && composer install
 
 WORKDIR /var/www/
 
-COPY . /var/www/
-COPY ./docker/entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT [ "bash", "./script/entrypoint.sh" ]
 
 EXPOSE 80

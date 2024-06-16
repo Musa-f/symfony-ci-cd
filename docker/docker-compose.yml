@@ -11,7 +11,6 @@ services:
       - db
     environment:
       DATABASE_URL: "mysql://symfony:symfony_password@db:3306/symfony?serverVersion=mariadb-11.4.2&charset=utf8mb4"
-    command: /usr/local/bin/entrypoint.sh
 
   db:
     container_name: mariadb
