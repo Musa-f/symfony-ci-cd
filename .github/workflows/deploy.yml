@@ -25,6 +25,6 @@ jobs:
               git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
             fi
             cd /var/www/symfony-ci-cd/docker
-            docker pull alievna/symfony:latest
-            docker compose down
-            docker compose up -d
+            docker-compose down
+            docker-compose pull
+            docker-compose up -d

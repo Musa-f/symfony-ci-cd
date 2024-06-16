@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: alievna/symfony:1.0
+    image: alievna/symfony:latest
     ports:
       - "8080:80"
     depends_on:
