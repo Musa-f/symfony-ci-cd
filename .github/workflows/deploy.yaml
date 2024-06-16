@@ -35,7 +35,7 @@ jobs:
 
   tests:
     needs: update
-    uses: ./.github/workflows/tests.yml
+    uses: ./.github/workflows/tests.yaml
 
   QA:
     needs: tests
