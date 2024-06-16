@@ -12,7 +12,7 @@ jobs:
 
       - name: Run PHPUnit Tests for Services
         run: |
-          docker exec alievna/symfony:latest ./vendor/bin/phpunit --testsuite=services
+          docker run --rm alievna/symfony:latest ./vendor/bin/phpunit --testsuite=services
 
   test_controllers:
     runs-on: ubuntu-latest
