@@ -16,6 +16,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: toor
       MYSQL_DATABASE: symfony
+      MARIADB_ROOT_PASSWORD: toor
     ports:
       - "3306:3306"
     volumes:
