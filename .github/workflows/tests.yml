@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run PHPUnit Tests for Services
-        run: vendor/bin/phpunit --testsuite=services
+        run: ./vendor/bin/phpunit --testsuite=services
 
   test_controllers:
     runs-on: ubuntu-latest
@@ -20,4 +20,4 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run PHPUnit Tests for Controllers
-        run: vendor/bin/phpunit --testsuite=controllers
+        run: ./vendor/bin/phpunit --testsuite=controllers
