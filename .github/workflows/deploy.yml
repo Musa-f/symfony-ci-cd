@@ -1,4 +1,4 @@
-name: Deploy to Server
+name: Deploy to Dev Server
 
 on:
   push:
@@ -26,6 +26,6 @@ jobs:
             fi
             cd /var/www/symfony-ci-cd/docker
             git fetch origin develop
-            git reset --hard origin/develop
+            git checkout develop
             docker compose down
             docker compose up -d
