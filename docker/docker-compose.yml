@@ -14,7 +14,7 @@ services:
 
   db:
     container_name: mariadb
-    image: mariadb:latest
+    image: mariadb
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: toor

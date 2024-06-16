@@ -13,13 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Git pull latest changes from develop branch
-        run: |
-          git fetch origin
-          git reset --hard origin/develop
-          git checkout develop
-          git pull origin develop
-
       - name: SSH into server and run Docker Compose
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -31,6 +24,8 @@ jobs:
             if [ ! -d "/var/www/symfony-ci-cd" ]; then
               git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
             fi
+            git checkout develop
+            git pull origin develop
             cd /var/www/symfony-ci-cd/docker
             docker compose pull
             docker compose down
