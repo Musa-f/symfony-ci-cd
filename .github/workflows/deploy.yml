@@ -13,13 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Verify branches
-        run: |
-          git fetch
-          git branch -a
-
       - name: Git pull latest changes from develop branch
         run: |
+          git fetch origin
+          git reset --hard origin/develop
           git checkout develop
           git pull origin develop
 
