@@ -13,8 +13,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Verify branches
+        run: |
+          git fetch
+          git branch -a
+
       - name: Git pull latest changes from develop branch
-        run: git pull origin develop
+        run: |
+          git checkout develop
+          git pull origin develop
 
       - name: SSH into server and run Docker Compose
         uses: appleboy/ssh-action@v1.0.3
