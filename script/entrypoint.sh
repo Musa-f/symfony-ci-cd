@@ -2,6 +2,8 @@
 
 cd /var/www/
 
+php /var/www/bin/console cache:clear
+
 echo "Running migrations..."
 php /var/www/bin/console doctrine:migrations:migrate --no-interaction
 
