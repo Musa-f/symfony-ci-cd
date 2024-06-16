@@ -34,7 +34,7 @@ jobs:
             docker compose up -d
 
   tests:
-    needs: deploy
+    needs: update
 
     steps:
       - name: Checkout code
