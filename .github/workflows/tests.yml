@@ -1,0 +1,26 @@
+name: PHPUnit Tests
+
+jobs:
+  test_services:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run PHPUnit Tests for Services
+        run: vendor/bin/phpunit --testsuite=services
+
+  test_controllers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Run PHPUnit Tests for Controllers
+        run: vendor/bin/phpunit --testsuite=controllers
