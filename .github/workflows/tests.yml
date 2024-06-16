@@ -1,5 +1,8 @@
 name: PHPUnit Tests
 
+on:
+    workflow_call
+
 jobs:
   test_services:
     runs-on: ubuntu-latest
