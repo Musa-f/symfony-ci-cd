@@ -27,5 +27,6 @@ jobs:
             cd /var/www/symfony-ci-cd/docker
             git fetch origin develop
             git checkout develop
+            docker compose pull
             docker compose down
             docker compose up -d
