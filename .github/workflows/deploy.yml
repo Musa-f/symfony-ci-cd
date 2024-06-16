@@ -22,7 +22,7 @@ jobs:
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
             if [ ! -d "/var/www/symfony-ci-cd" ]; then
-              git clone https://github.com/Musa-f/symfony-ci-cd /var/www/symfony-ci-cd
+              git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
             fi
             cd /var/www/symfony-ci-cd/docker
             docker pull alievna/symfony:latest
