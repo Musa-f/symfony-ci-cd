@@ -1,7 +1,9 @@
 version: '3.8'
 
 services:
+
   app:
+    container_name: symfony
     image: alievna/symfony:latest
     ports:
       - "8080:80"
@@ -9,11 +11,11 @@ services:
       - db
 
   db:
-    image: mariadb:latest
     container_name: mariadb
+    image: mariadb:latest
     environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL_PASSWORD}"
-      MYSQL_DATABASE: "${MYSQL_DB}"
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: symfony
     ports:
       - "3306:3306"
     volumes:
