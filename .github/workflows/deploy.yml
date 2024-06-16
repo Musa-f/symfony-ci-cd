@@ -6,7 +6,8 @@ on:
       - develop
 
 jobs:
-  deploy:
+
+  update:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,3 +32,17 @@ jobs:
             docker compose pull
             docker compose down
             docker compose up -d
+
+  tests:
+    needs: deploy
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+  QA:
+    needs: tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2

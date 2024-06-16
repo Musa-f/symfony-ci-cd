@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IndexController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/index', name: 'index', methods: ['GET'])]
     public function index(): JsonResponse
     {
         return $this->json("API Ressources Relationnelles");
