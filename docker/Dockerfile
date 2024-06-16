@@ -14,7 +14,7 @@ COPY . /var/www/
 
 COPY ./docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
-RUN cd /var/www/symfony-ci-cd && composer install
+RUN cd /var/www/symfony-ci-cd/ && composer install --no-interaction --prefer-dist
 
 WORKDIR /var/www/
 
