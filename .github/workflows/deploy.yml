@@ -25,6 +25,7 @@ jobs:
               git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
             fi
             cd /var/www/symfony-ci-cd/docker
+            git fetch origin develop
+            git reset --hard origin/develop
             docker compose down
-            docker compose pull
             docker compose up -d
