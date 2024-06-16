@@ -18,6 +18,8 @@ RUN cd /var/www && composer install
 
 WORKDIR /var/www/
 
+RUN chmod +x script/entrypoint.sh
+
 ENTRYPOINT [ "bash", "./script/entrypoint.sh" ]
 
 EXPOSE 80
