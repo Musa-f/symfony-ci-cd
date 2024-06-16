@@ -24,6 +24,7 @@ jobs:
             if [ ! -d "/var/www/symfony-ci-cd" ]; then
               git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
             fi
+            cd /var/www/symfony-ci-cd/docker
             git checkout develop
             git pull origin develop
             cd /var/www/symfony-ci-cd/docker
