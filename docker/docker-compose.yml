@@ -18,7 +18,7 @@ services:
     environment:
       MARIADB_ROOT_PASSWORD: toor
       MARIADB_DATABASE: symfony
-      MARIADB_USER: user
+      MARIADB_USER: username
       MARIADB_PASSWORD: password
 
   adminer:
