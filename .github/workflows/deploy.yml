@@ -22,19 +22,16 @@ jobs:
           password: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            if [ ! -d "/var/www/symfony-ci-cd" ]; then
-              git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
-            fi
             cd /var/www/symfony-ci-cd
             git checkout develop
             git pull origin develop
             docker compose -f ./docker/docker-compose.yml up -d --build
 
-      - name: Run Doctrine Migrations
-        uses: docker://php
-        with:
-          entrypoint: sh
-          args: -c "docker run --rm -v $PWD:/app -w /app php php bin/console doctrine:migrations:migrate"
+      # - name: Run Doctrine Migrations
+      #   uses: docker://php
+      #   with:
+      #     entrypoint: sh
+      #     args: -c "docker run --rm -v $PWD:/app -w /app php php bin/console doctrine:migrations:migrate"
 
       # - name: Load Doctrine Fixtures
       #   if: success() && steps.ssh-exec.outcome == 'success'
