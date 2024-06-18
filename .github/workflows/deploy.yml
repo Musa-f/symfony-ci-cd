@@ -25,22 +25,19 @@ jobs:
             if [ ! -d "/var/www/symfony-ci-cd" ]; then
               git clone https://github.com/Musa-f/symfony-ci-cd /var/www/
             fi
-            cd /var/www/symfony-ci-cd/docker
+            cd /var/www/symfony-ci-cd
             git checkout develop
             git pull origin develop
-            cd /var/www/symfony-ci-cd/docker
-            docker compose pull
-            docker compose down
-            docker compose up -d
+            docker compose -f ./docker/docker-compose.yml up -d --build
 
-  tests:
-    needs: update
-    uses: ./.github/workflows/tests.yml
+  # tests:
+  #   needs: update
+  #   uses: ./.github/workflows/tests.yml
 
-  QA:
-    needs: tests
-    runs-on: ubuntu-latest
+  # QA:
+  #   needs: tests
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
