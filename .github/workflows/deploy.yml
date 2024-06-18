@@ -28,7 +28,6 @@ jobs:
             cd /var/www/symfony-ci-cd
             git checkout develop
             git pull origin develop
-            docker compose -f ./docker/docker-compose.yml up -d --build
 
       - name: Docker update
         run: |
