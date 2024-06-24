@@ -28,8 +28,16 @@ jobs:
             docker compose -f ./docker/docker-compose.yml up -d --build
 
       - name: Run migrations
-        run: |
-          bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_SSH_PORT }}
+          script: |
+            cd /var/www/symfony-ci-cd/docker
+            docker exec -it symfony /bin/bash
+            bin/console doctrine:migrations:migrate
 
 #  tests:
 #     needs: update
