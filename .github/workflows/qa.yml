@@ -1,0 +1,16 @@
+# name: QA Checks
+
+# jobs:
+#   qa:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Run PHPStan
+#         run: ./vendor/bin/phpstan analyse -c phpstan.neon
+
+#       - name: Run PHP_CodeSniffer
+#         run: ./vendor/bin/phpcs --standard=PSR12 src/
+
