@@ -1,5 +1,6 @@
-services:
+version: '3.8'
 
+services:
   app:
     container_name: symfony
     build:
@@ -9,6 +10,8 @@ services:
       - "8080:80"
     depends_on:
       - db
+    networks:
+      - symfony-network
 
   db:
     container_name: mariadb
@@ -20,6 +23,8 @@ services:
       MARIADB_DATABASE: symfony
       MARIADB_USER: username
       MARIADB_PASSWORD: password
+    networks:
+      - symfony-network
 
   adminer:
     container_name: adminer
@@ -27,7 +32,8 @@ services:
     restart: always
     ports:
       - 3307:8080
+    networks:
+      - symfony-network
 
-volumes:
-  db_data:
-
+networks:
+  symfony-network:

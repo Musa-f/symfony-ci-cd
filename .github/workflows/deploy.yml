@@ -29,8 +29,8 @@ jobs:
 
       - name: Run migrations
         run: |
-          docker compose -f /var/www/symfony-ci-cd/docker/docker-compose.yml \
-          exec -T app bin/console doctrine:migrations:migrate --no-interaction
+          cd /var/www/symfony-ci-cd/docker
+          docker compose exec -T app bin/console doctrine:migrations:migrate --no-interaction
 
 #  tests:
 #     needs: update
