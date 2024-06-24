@@ -29,9 +29,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          cd /var/www/symfony-ci-cd/docker
-          docker compose exec -T app chmod +x bin/console
-          docker compose exec -T app bin/console doctrine:migrations:migrate --no-interaction
+          bin/console doctrine:migrations:migrate --no-interaction
 
 #  tests:
 #     needs: update
