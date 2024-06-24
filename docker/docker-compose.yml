@@ -1,15 +1,4 @@
 services:
-  app:
-    container_name: symfony
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    ports:
-      - "8080:80"
-    depends_on:
-      - db
-    networks:
-      - symfony-network
 
   db:
     container_name: mariadb
@@ -21,6 +10,18 @@ services:
       MARIADB_DATABASE: symfony
       MARIADB_USER: username
       MARIADB_PASSWORD: password
+    networks:
+      - symfony-network
+
+  app:
+    container_name: symfony
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
     networks:
       - symfony-network
 
