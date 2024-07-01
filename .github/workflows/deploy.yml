@@ -6,57 +6,55 @@ on:
       - develop
 
 jobs:
-  test:
+
+  test-services:
     runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        uses: php-actions/composer@v6
+
+      - name: PHPUnit Tests for Services
+        uses: php-actions/phpunit@v3
+        with:
+          version: 9.6
+          bootstrap: vendor/autoload.php
+          configuration: tests/phpunit.xml
+          args: --testsuite=Services
+
+  test-routes:
+    runs-on: ubuntu-latest
     services:
-      mariadb:
-        image: mariadb:latest
+      mysql:
+        image: mysql:5.7
         env:
           MYSQL_ROOT_PASSWORD: root_password
-          MYSQL_DATABASE: symfony
-          MYSQL_USER: ${{ secrets.DB_USER }}
-          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MYSQL_DATABASE: test_database
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=30s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '7.4'
-          extensions: mbstring, pdo_mysql
+      - name: Start MySQL
+        run: docker-compose up -d mysql
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+      - name: Install dependencies
+        uses: php-actions/composer@v6
 
-      - name: Prepare test database
+      - name: Prepare database
         run: |
-          mysql -h localhost -u $MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS symfony"
+          php bin/console doctrine:schema:update --force --env=test
+          php bin/console doctrine:fixtures:load --no-interaction --env=test
 
-      - name: Run PHPUnit tests
-        run: vendor/bin/phpunit
-
-  # test-services:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - name: Install dependencies
-  #       uses: php-actions/composer@v6
-
-  #     - name: PHPUnit Tests for Services
-  #       uses: php-actions/phpunit@v3
-  #       with:
-  #         version: 9.6
-  #         bootstrap: vendor/autoload.php
-  #         configuration: tests/phpunit.xml
-  #         args: --testsuite=Services
+      - name: PHPUnit Tests for Controllers
+        env:
+          DATABASE_URL: mysql://root:root_password@localhost:3306/test_database
+        run: php bin/phpunit --testsuite=Controllers
 
   # test-controllers:
   #   needs: [test-services]
