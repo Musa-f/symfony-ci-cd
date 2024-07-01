@@ -18,7 +18,7 @@ jobs:
         tools: phpunit:9.5
     
     - name: Run PHPUnit Tests for Services
-      run: phpunit --testsuite=Services
+      run: php bin/phpunit --testsuite=Services
 
   # update:
   #   runs-on: ubuntu-latest
