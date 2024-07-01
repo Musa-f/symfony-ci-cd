@@ -40,12 +40,16 @@ jobs:
           - 3306:3306
         options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
                 
-      env:
-        BDD_HOST: 127.0.0.1
-        BBD_PORT: 3306
-        BDD_NAME: test
-        BDD_USER: test
-        BDD_PASS: test
+    env:
+      BDD_HOST: 127.0.0.1
+      BBD_PORT: 3306
+      BDD_NAME: test
+      BDD_USER: test
+      BDD_PASS: test
+
+    steps:
+    - name: PHPUnit Tests for Controllers
+      uses: php-actions/phpunit@v3
 
       # steps:
       #   - name: PHPUnit Tests for Controllers
