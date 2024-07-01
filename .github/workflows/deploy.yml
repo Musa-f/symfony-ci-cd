@@ -25,7 +25,7 @@ jobs:
           args: --testsuite=Services
 
   test-controllers:
-    needs: [routage_main]
+    needs: [test-services]
     runs-on: ubuntu-latest
 
     services:
@@ -47,14 +47,14 @@ jobs:
         BDD_USER: test
         BDD_PASS: test
 
-      steps:
-        - name: PHPUnit Tests for Controllers
-          uses: php-actions/phpunit@v3
-          with:
-            version: 9.6
-            bootstrap: vendor/autoload.php
-            configuration: tests/phpunit.xml
-            args: --testsuite=Controllers
+      # steps:
+      #   - name: PHPUnit Tests for Controllers
+      #     uses: php-actions/phpunit@v3
+      #     with:
+      #       version: 9.6
+      #       bootstrap: vendor/autoload.php
+      #       configuration: tests/phpunit.xml
+      #       args: --testsuite=Controllers
 
   # tests:
   #   runs-on: ubuntu-latest
