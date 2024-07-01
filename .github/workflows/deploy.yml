@@ -42,7 +42,7 @@ jobs:
 
       - name: Start MariaDB
         working-directory: docker 
-        run: docker compose up -d mariadb
+        run: docker compose up -d db
 
       - name: Install dependencies
         uses: php-actions/composer@v6
