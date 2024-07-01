@@ -10,6 +10,7 @@
 	<php>
         <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/ressources_relationnelles"/>
         <env name="KERNEL_CLASS" value="App\Kernel" />
+        <env name="CORS_ALLOW_ORIGIN" value="*"/> 
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
         <server name="APP_ENV" value="test" force="true" />
