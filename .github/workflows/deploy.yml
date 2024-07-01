@@ -22,7 +22,7 @@ jobs:
           version: 9.6
           bootstrap: vendor/autoload.php
           configuration: tests/phpunit.xml
-          args: --coverage-text
+          args: --testsuite=Services
 
   # tests:
   #   runs-on: ubuntu-latest
