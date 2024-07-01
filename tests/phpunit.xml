@@ -9,7 +9,6 @@
 
 	<php>
         <env name="DATABASE_URL" value="mysql://root:@127.0.0.1:3306/ressources_relationnelles"/>
-        <env name="CORS_ALLOW_ORIGIN" value="^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$" />
         <env name="KERNEL_CLASS" value="App\Kernel" />
         <ini name="display_errors" value="1" />
         <ini name="error_reporting" value="-1" />
