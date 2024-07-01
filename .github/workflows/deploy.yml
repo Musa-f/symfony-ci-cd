@@ -6,70 +6,105 @@ on:
       - develop
 
 jobs:
-
-  test-services:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install dependencies
-        uses: php-actions/composer@v6
-
-      - name: PHPUnit Tests for Services
-        uses: php-actions/phpunit@v3
-        with:
-          version: 9.6
-          bootstrap: vendor/autoload.php
-          configuration: tests/phpunit.xml
-          args: --testsuite=Services
-
-  test-controllers:
-    needs: [test-services]
+  test:
     runs-on: ubuntu-latest
 
     services:
       mariadb:
         image: mariadb:latest
         env:
-          MARIADB_ROOT_PASSWORD: toor
-          MARIADB_DATABASE: test
-          MARIADB_USER: test
-          MARIADB_PASSWORD: test
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_DATABASE: symfony
+          MYSQL_USER: ${{ secrets.DB_USER }}
+          MYSQL_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 3306:3306
-        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
-                
-    env:
-      BDD_HOST: 127.0.0.1
-      BBD_PORT: 3306
-      BDD_NAME: test
-      BDD_USER: test
-      BDD_PASS: test
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-    - name: PHPUnit Tests for Controllers
-      uses: php-actions/phpunit@v3
-      with:
-        version: 9.6
-        bootstrap: vendor/autoload.php
-        configuration: tests/phpunit.xml
-        args: --testsuite=Controllers
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-  # tests:
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, pdo_mysql
+
+      - name: Install Composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Prepare test database
+        run: |
+          mysql -h localhost -u $MYSQL_USER -p$MYSQL_PASSWORD -e "CREATE DATABASE IF NOT EXISTS symfony"
+
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit
+
+  # test-services:
   #   runs-on: ubuntu-latest
+
   #   steps:
+  #     - uses: actions/checkout@v3
 
-  #   - name: Setup PHP with tools
-  #     uses: shivammathur/setup-php@v2
+  #     - name: Install dependencies
+  #       uses: php-actions/composer@v6
+
+  #     - name: PHPUnit Tests for Services
+  #       uses: php-actions/phpunit@v3
+  #       with:
+  #         version: 9.6
+  #         bootstrap: vendor/autoload.php
+  #         configuration: tests/phpunit.xml
+  #         args: --testsuite=Services
+
+  # test-controllers:
+  #   needs: [test-services]
+  #   runs-on: ubuntu-latest
+
+  #   services:
+  #     mariadb:
+  #       image: mariadb:latest
+  #       env:
+  #         MARIADB_ROOT_PASSWORD: toor
+  #         MARIADB_DATABASE: test
+  #         MARIADB_USER: test
+  #         MARIADB_PASSWORD: test
+  #       ports:
+  #         - 3306:3306
+  #       options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
+                
+  #   env:
+  #     BDD_HOST: 127.0.0.1
+  #     BBD_PORT: 3306
+  #     BDD_NAME: test
+  #     BDD_USER: test
+  #     BDD_PASS: test
+
+  #   steps:
+  #   - name: PHPUnit Tests for Controllers
+  #     uses: php-actions/phpunit@v3
   #     with:
-  #       php-version: '8.3'
-  #       tools: phpunit:9.5
+  #       version: 9.6
+  #       bootstrap: vendor/autoload.php
+  #       configuration: tests/phpunit.xml
+  #       args: --testsuite=Controllers
 
-  #   - name: Run PHPUnit tests
-  #     run: vendor/bin/phpunit --testsuite=Services
+# tests:
+#     needs: update
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Run tests
+#         uses: ./.github/workflows/tests.yml
 
-  # update:
+#   qa:
+#     needs: tests
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Run QA checks
+#         uses: ./.github/workflows/qa.yml
+
+# update:
   #   runs-on: ubuntu-latest
 
   #   steps:
@@ -88,25 +123,6 @@ jobs:
   #           git checkout develop
   #           git pull origin develop
   #           docker compose -f ./docker/docker-compose.yml up -d --build
-
-#FIXME FONCTIONNE SUR LE SEVEUR MAIS PAS SUR LE WORKFLOW
-      # - name: Run migrations
-      #   run: |
-      #     docker exec symfony bin/console doctrine:migrations:migrate
-
-  # tests:
-  #     needs: update
-  #     runs-on: ubuntu-latest
-  #     steps:
-  #       - name: Run tests
-  #         uses: ./.github/workflows/tests.yml
-
-#   qa:
-#     needs: tests
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Run QA checks
-#         uses: ./.github/workflows/qa.yml
 
 #   merge:
 #     needs: qa
