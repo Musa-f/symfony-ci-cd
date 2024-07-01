@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install dependencies
       - uses: php-actions/composer@v6
 
       - name: PHPUnit Tests
@@ -20,6 +21,8 @@ jobs:
         with:
           version: 9.6
           bootstrap: vendor/autoload.php
+          configuration: test/phpunit.xml
+          args: --coverage-text
 
   # tests:
   #   runs-on: ubuntu-latest
