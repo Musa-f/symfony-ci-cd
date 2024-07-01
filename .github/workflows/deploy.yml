@@ -25,6 +25,7 @@ jobs:
           args: --testsuite=Services
 
   test-routes:
+    needs: [test-services]
     runs-on: ubuntu-latest
     services:
       mariadb:
@@ -56,37 +57,6 @@ jobs:
         env:
           DATABASE_URL: mysql://root:root_password@localhost:3306/test_database
         run: php bin/phpunit --testsuite=Controllers
-  # test-controllers:
-  #   needs: [test-services]
-  #   runs-on: ubuntu-latest
-
-  #   services:
-  #     mariadb:
-  #       image: mariadb:latest
-  #       env:
-  #         MARIADB_ROOT_PASSWORD: toor
-  #         MARIADB_DATABASE: test
-  #         MARIADB_USER: test
-  #         MARIADB_PASSWORD: test
-  #       ports:
-  #         - 3306:3306
-  #       options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=3
-                
-  #   env:
-  #     BDD_HOST: 127.0.0.1
-  #     BBD_PORT: 3306
-  #     BDD_NAME: test
-  #     BDD_USER: test
-  #     BDD_PASS: test
-
-  #   steps:
-  #   - name: PHPUnit Tests for Controllers
-  #     uses: php-actions/phpunit@v3
-  #     with:
-  #       version: 9.6
-  #       bootstrap: vendor/autoload.php
-  #       configuration: tests/phpunit.xml
-  #       args: --testsuite=Controllers
 
 # tests:
 #     needs: update
