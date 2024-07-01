@@ -50,15 +50,11 @@ jobs:
     steps:
     - name: PHPUnit Tests for Controllers
       uses: php-actions/phpunit@v3
-
-      # steps:
-      #   - name: PHPUnit Tests for Controllers
-      #     uses: php-actions/phpunit@v3
-      #     with:
-      #       version: 9.6
-      #       bootstrap: vendor/autoload.php
-      #       configuration: tests/phpunit.xml
-      #       args: --testsuite=Controllers
+      with:
+        version: 9.6
+        bootstrap: vendor/autoload.php
+        configuration: tests/phpunit.xml
+        args: --testsuite=Controllers
 
   # tests:
   #   runs-on: ubuntu-latest
