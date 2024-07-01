@@ -7,36 +7,54 @@ on:
 
 jobs:
 
-  update:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - name: SSH into server and run Docker Compose
-        uses: appleboy/ssh-action@v1.0.3
+      - uses: php-actions/composer@v6
+
+      - name: PHPUnit Tests
+        uses: php-actions/phpunit@master
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SERVER_SSH_PORT }}
-          script: |
-            cd /var/www/symfony-ci-cd
-            git checkout develop
-            git pull origin develop
-            docker compose -f ./docker/docker-compose.yml up -d --build
+          version: 9.6
+          php_version: 8.3
+          bootstrap: vendor/autoload.php
+          configuration: test/phpunit.xml
+          args: --coverage-text
 
-      - name: Run migrations
-        run: |
-          docker exec symfony bin/console doctrine:migrations:migrate
+  # update:
+  #   runs-on: ubuntu-latest
 
-  tests:
-      needs: update
-      runs-on: ubuntu-latest
-      steps:
-        - name: Run tests
-          uses: ./.github/workflows/tests.yml
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+
+  #     - name: SSH into server and run Docker Compose
+  #       uses: appleboy/ssh-action@v1.0.3
+  #       with:
+  #         host: ${{ secrets.SERVER_HOST }}
+  #         username: ${{ secrets.SERVER_USERNAME }}
+  #         password: ${{ secrets.SSH_PRIVATE_KEY }}
+  #         port: ${{ secrets.SERVER_SSH_PORT }}
+  #         script: |
+  #           cd /var/www/symfony-ci-cd
+  #           git checkout develop
+  #           git pull origin develop
+  #           docker compose -f ./docker/docker-compose.yml up -d --build
+
+#FIXME FONCTIONNE SUR LE SEVEUR MAIS PAS SUR LE WORKFLOW
+      # - name: Run migrations
+      #   run: |
+      #     docker exec symfony bin/console doctrine:migrations:migrate
+
+  # tests:
+  #     needs: update
+  #     runs-on: ubuntu-latest
+  #     steps:
+  #       - name: Run tests
+  #         uses: ./.github/workflows/tests.yml
 
 #   qa:
 #     needs: tests

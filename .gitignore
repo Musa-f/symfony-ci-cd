@@ -31,3 +31,5 @@
 ###< docker ###
 
 /mysql
+/.github/workflows/qa.yml
+/.github/workflows/tests.yml
