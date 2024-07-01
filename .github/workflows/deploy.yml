@@ -20,7 +20,6 @@ jobs:
         with:
           version: 9.6
           bootstrap: vendor/autoload.php
-          configuration: phpunit.xml
 
   # tests:
   #   runs-on: ubuntu-latest
