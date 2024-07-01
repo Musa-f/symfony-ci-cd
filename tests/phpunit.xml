@@ -28,10 +28,10 @@
 
 	<testsuites>
         <testsuite name="Services">
-            <directory>tests/Service</directory>
+            <directory>Service</directory>
         </testsuite>
         <testsuite name="Controllers">
-            <directory>tests/Controller</directory>
+            <directory>Controller</directory>
         </testsuite>
     </testsuites>
 
