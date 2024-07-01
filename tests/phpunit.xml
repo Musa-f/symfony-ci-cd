@@ -1,5 +1,21 @@
-<?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="tests/bootstrap.php"
+         convertDeprecationsToExceptions="false"
+>
+
+	<php>
+        <ini name="display_errors" value="1" />
+        <ini name="error_reporting" value="-1" />
+        <server name="APP_ENV" value="test" force="true" />
+        <server name="SHELL_VERBOSITY" value="-1" />
+        <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
+        <server name="SYMFONY_PHPUNIT_VERSION" value="9.6" />
+    </php>
+
 	<coverage>
 		<include>
 			<directory suffix=".php">../../src</directory>
@@ -9,10 +25,15 @@
 			<text outputFile="php://stdout" showUncoveredFiles="true"/>
 		</report>
 	</coverage>
+
 	<testsuites>
-		<testsuite name="main">
-			<directory suffix="Test.php">.</directory>
-		</testsuite>
-	</testsuites>
+        <testsuite name="Services">
+            <directory>tests/Service</directory>
+        </testsuite>
+        <testsuite name="Controllers">
+            <directory>tests/Controller</directory>
+        </testsuite>
+    </testsuites>
+
 	<logging/>
 </phpunit>
