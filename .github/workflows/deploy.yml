@@ -27,8 +27,8 @@ jobs:
   test-routes:
     runs-on: ubuntu-latest
     services:
-      mysql:
-        image: mysql:5.7
+      mariadb:
+        image: mariadb:10.5
         env:
           MYSQL_ROOT_PASSWORD: root_password
           MYSQL_DATABASE: test_database
@@ -40,8 +40,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Start MySQL
-        run: docker-compose up -d mysql
+      - name: Start MariaDB
+        run: docker compose up -d mariadb
 
       - name: Install dependencies
         uses: php-actions/composer@v6
