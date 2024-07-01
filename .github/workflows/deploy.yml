@@ -7,22 +7,14 @@ on:
 
 jobs:
 
-  build-test:
+  tests:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: php-actions/composer@v6
-
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@master
-        with:
-          version: 9.6
-          php_version: 8.3
-          bootstrap: vendor/autoload.php
-          configuration: test/phpunit.xml
-          args: --coverage-text
+    - name: Setup PHP with tools
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+        tools: phpunit:9.5
 
   # update:
   #   runs-on: ubuntu-latest
