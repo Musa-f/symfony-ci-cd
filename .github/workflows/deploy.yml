@@ -32,9 +32,9 @@ jobs:
         image: mariadb:10.5
         env:
           MARIADB_ROOT_PASSWORD: toor
-          MARIADB_DATABASE: test
-          MARIADB_USER: test
-          MARIADB_PASSWORD: test
+          MARIADB_DATABASE: symfony
+          MARIADB_USER: username
+          MARIADB_PASSWORD: password
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -57,6 +57,7 @@ jobs:
 
       - name: Prepare database
         run: |
+          docker exec -it symfony /bin/bash
           php bin/console doctrine:schema:update --force --env=test
           php bin/console doctrine:fixtures:load --no-interaction --env=test
 
