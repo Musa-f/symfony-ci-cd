@@ -34,7 +34,7 @@ class ResourceControllerTest extends WebTestCase
     public function testGetResource(): void
     {
         $resourceId = 1;
-        $this->client->request('GET', '/api/resources/' . $resourceId);
+        $this->client->request('GET', '/api/resouhyrces/' . $resourceId);
         $response = $this->client->getResponse();
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
