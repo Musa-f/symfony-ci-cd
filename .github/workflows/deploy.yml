@@ -75,7 +75,7 @@ jobs:
           php bin/console doctrine:fixtures:load --no-interaction
 
       - name: Run PHPUnit tests
-        run: php ./vendor/bin/phpunit --testsuite=Controllers 
+        run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml
 
       # - name: Run PHPUnit Tests for Controllers
       #   uses: php-actions/phpunit@v3
