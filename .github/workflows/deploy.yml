@@ -69,7 +69,7 @@ jobs:
 
       - name: Prepare database
         env:
-          DATABASE_URL: mysql://symfony:symfony@127.0.0.1:3306/symfony
+          DATABASE_URL: mysql://symfony:symfony@mariadb:3306/symfony
         run: |
           php bin/console doctrine:schema:update --force
           php bin/console doctrine:fixtures:load --no-interaction
