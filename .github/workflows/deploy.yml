@@ -27,6 +27,7 @@ jobs:
   test-routes:
     needs: [test-services]
     runs-on: ubuntu-latest
+
     services:
       mariadb:
         image: mariadb:10.5
@@ -37,7 +38,11 @@ jobs:
           MARIADB_PASSWORD: symfony
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Checkout code
@@ -49,8 +54,15 @@ jobs:
           php-version: '8.2'
 
       - name: Start MariaDB
-        working-directory: docker 
-        run: docker compose up -d db
+        run: |
+        for i in `seq 1 30`; do
+          if mysqladmin ping -h "127.0.0.1" --silent; then
+            echo "MariaDB is ready!"
+            break
+          fi
+          echo 'Waiting for MariaDB to be ready...'
+          sleep 2
+        done
 
       - name: Install dependencies
         uses: php-actions/composer@v6
