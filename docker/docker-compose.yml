@@ -1,3 +1,4 @@
+copie docker compose file:
 services:
 
   db:
@@ -6,10 +7,10 @@ services:
     volumes:
       - ../mysql:/var/lib/mysql
     environment:
-      MARIADB_ROOT_PASSWORD: toor
+      MARIADB_ROOT_PASSWORD: root
       MARIADB_DATABASE: symfony
-      MARIADB_USER: username
-      MARIADB_PASSWORD: password
+      MARIADB_USER: symfony
+      MARIADB_PASSWORD: symfony
     networks:
       - symfony-network
 
