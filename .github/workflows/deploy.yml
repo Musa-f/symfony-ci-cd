@@ -74,13 +74,17 @@ jobs:
           php bin/console doctrine:schema:update --force
           php bin/console doctrine:fixtures:load --no-interaction
 
-      - name: PHPUnit Tests for Controllers
+      - name: Run PHPUnit Tests for Controllers
         uses: php-actions/phpunit@v3
         with:
           version: 9.6
           bootstrap: vendor/autoload.php
           configuration: tests/phpunit.xml
           args: --testsuite=Controllers
+        env:
+          DATABASE_URL: mysql://symfony:symfony@127.0.0.1:3306/symfony
+          CORS_ALLOW_ORIGIN: "*"
+          APP_ENV: dev
 
 # tests:
 #     needs: update
