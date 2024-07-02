@@ -55,14 +55,14 @@ jobs:
 
       - name: Start MariaDB
         run: |
-        for i in `seq 1 30`; do
-          if mysqladmin ping -h "127.0.0.1" --silent; then
-            echo "MariaDB is ready!"
-            break
-          fi
-          echo 'Waiting for MariaDB to be ready...'
-          sleep 2
-        done
+          for i in `seq 1 30`; do
+            if mysqladmin ping -h "127.0.0.1" --silent; then
+              echo "MariaDB is ready!"
+              break
+            fi
+            echo 'Waiting for MariaDB to be ready...'
+            sleep 2
+          done
 
       - name: Install dependencies
         uses: php-actions/composer@v6
