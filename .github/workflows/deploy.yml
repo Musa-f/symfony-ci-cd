@@ -75,9 +75,12 @@ jobs:
           php bin/console doctrine:fixtures:load --no-interaction
 
       - name: PHPUnit Tests for Controllers
-        env:
-          DATABASE_URL: mysql://symfony:symfony@127.0.0.1:3306/symfony
-        run: php bin/phpunit --testsuite=Controllers
+        uses: php-actions/phpunit@v3
+        with:
+          version: 9.6
+          bootstrap: vendor/autoload.php
+          configuration: tests/phpunit.xml
+          args: --testsuite=Controllers
 
 # tests:
 #     needs: update
