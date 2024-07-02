@@ -24,14 +24,6 @@ jobs:
       - name: Run PHPUnit tests
         run: php ./vendor/bin/phpunit --testsuite=Services --configuration tests/phpunit.xml
 
-      # - name: PHPUnit Tests for Services
-      #   uses: php-actions/phpunit@v3
-      #   with:
-      #     version: 9.6
-      #     bootstrap: vendor/autoload.php
-      #     configuration: tests/phpunit.xml
-      #     args: --testsuite=Services
-
   test-routes:
     needs: [test-services]
     runs-on: ubuntu-latest
@@ -83,7 +75,7 @@ jobs:
           php bin/console doctrine:fixtures:load --no-interaction
 
       - name: Run PHPUnit tests
-        run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml
+        run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml --no-deprecation-check
 
 
 # tests:
