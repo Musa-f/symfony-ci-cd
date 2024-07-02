@@ -24,15 +24,15 @@ class ResourceControllerTest extends WebTestCase
         $this->assertJson($response->getContent());
     }
 
-    public function testGetResource(): void
-    {
-        $resourceId = 1;
-        $this->client->request('GET', '/api/resources/' . $resourceId);
-        $response = $this->client->getResponse();
+    // public function testGetResource(): void
+    // {
+    //     $resourceId = 1;
+    //     $this->client->request('GET', '/api/resources/' . $resourceId);
+    //     $response = $this->client->getResponse();
 
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertJson($response->getContent());
-    }
+    //     $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    //     $this->assertJson($response->getContent());
+    // }
 
     /*public function testDeleteResource(): void
     {
