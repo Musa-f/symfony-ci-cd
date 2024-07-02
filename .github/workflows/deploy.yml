@@ -75,7 +75,7 @@ jobs:
           php bin/console doctrine:fixtures:load --no-interaction
 
       - name: Run PHPUnit tests
-        run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml --no-deprecation-check
+        run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml
 
 
 # tests:
