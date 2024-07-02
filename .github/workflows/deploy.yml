@@ -33,6 +33,9 @@ jobs:
         image: mariadb:10.5
         env:
           MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: symfony_test
+          MARIADB_USER: symfony
+          MARIADB_PASSWORD: symfony
         ports:
           - 3306:3306
         options: >-
