@@ -84,7 +84,6 @@ jobs:
         env:
           DATABASE_URL: mysql://symfony:symfony@127.0.0.1:3306/symfony
           CORS_ALLOW_ORIGIN: "*"
-          APP_ENV: test
 
 # tests:
 #     needs: update
