@@ -23,6 +23,14 @@ class ResourceControllerTest extends WebTestCase
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
     }
 
+    public function addResource(): void
+    {
+        $this->client->request('POST', '/api/resources/add');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    }
+
     // public function testGetResource(): void
     // {
     //     $resourceId = 1;
@@ -30,7 +38,6 @@ class ResourceControllerTest extends WebTestCase
     //     $response = $this->client->getResponse();
 
     //     $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-    //     $this->assertJson($response->getContent());
     // }
 
     /*public function testDeleteResource(): void
