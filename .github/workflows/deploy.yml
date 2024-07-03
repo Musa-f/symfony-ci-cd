@@ -16,18 +16,18 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Checkout dev branch
+      - name: Checkout develop branch
         run: |
-          git checkout dev
+          git checkout develop
 
       - name: Create or update release branch
         run: |
           if git show-ref --verify --quiet refs/heads/release; then
             git checkout release
-            git merge dev --no-ff -m "Merging changes from dev to release"
+            git merge develop --no-ff -m "Merging changes from dev to release"
           else
             git checkout -b release
-            git merge dev --no-ff -m "Merging changes from dev to release"
+            git merge develop --no-ff -m "Merging changes from dev to release"
           fi
           
       - name: Push release branch
