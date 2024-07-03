@@ -27,7 +27,7 @@ jobs:
         run: |
           if git show-ref --verify --quiet refs/heads/release; then
             git checkout release
-            git pull origin release  # Update local release branch
+            git pull origin release 
             git merge develop --no-ff -m "Merging changes from develop to release"
           else
             git checkout -b release develop
@@ -39,6 +39,29 @@ jobs:
         run: |
           git remote set-url origin https://x-access-token:${PAT}@github.com/${{ github.repository }}
           git push origin release
+
+  update-docker-image:
+    runs-on: ubuntu-latest
+    needs: create-release 
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t alievna/ressources-relationnelles:${GITHUB_SHA} .
+          docker push alievna/ressources-relationnelles:${GITHUB_SHA}
 
 
   # test-services:
