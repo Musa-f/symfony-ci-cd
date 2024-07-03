@@ -42,7 +42,7 @@ jobs:
 
   update-docker-image:
     runs-on: ubuntu-latest
-    needs: create-release 
+    needs: merge-branch 
 
     steps:
       - name: Checkout repository
