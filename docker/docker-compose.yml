@@ -1,4 +1,3 @@
-copie docker compose file:
 services:
 
   db:
@@ -16,9 +15,7 @@ services:
 
   app:
     container_name: symfony
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
+    image: alievna/ressources-relationnelles
     ports:
       - "8080:80"
     depends_on:
