@@ -20,6 +20,11 @@ jobs:
       - name: Checkout release branch
         run: git checkout -b release origin/release
 
+      - name: Merge develop into release
+        run: |
+          git merge develop
+          git push origin release
+
 
   # test-services:
   #   runs-on: ubuntu-latest
