@@ -18,13 +18,13 @@ jobs:
         run: git fetch origin
 
       - name: Checkout release branch
-        run: git checkout -b release origin/release
+        run: git checkout -b release release
 
       - name: Merge develop into release
         run: | 
           git config --global user.email "musaevafatima77@gmail.com"
           git config --global user.name "musa"
-          git merge develop --allow-unrelated-histories
+          git merge develop
           git push origin release
 
 
