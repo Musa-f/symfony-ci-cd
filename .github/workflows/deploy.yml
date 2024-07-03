@@ -75,7 +75,7 @@ jobs:
           password: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            cd /var/www/symfony-ci-cd
+            cd symfony-ci-cd/docker
             docker pull alievna/ressources-relationnelles:${GITHUB_SHA}
             docker compose up -d
 
