@@ -77,7 +77,7 @@ jobs:
         run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml
 
   merge:
-    needs: needs: [test-services, test-routes]
+    needs: [test-services, test-routes]
     runs-on: ubuntu-latest
     if: success()
     steps:
