@@ -31,10 +31,8 @@ jobs:
           fi
           
       - name: Push release branch
-        env:
-          PAT: ${{ secrets.PAT }}
         run: |
-          git remote set-url origin https://x-access-token:${PAT}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://github.com/${{ github.repository }}.git
           git push origin release
 
   # test-services:
