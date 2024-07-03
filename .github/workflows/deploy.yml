@@ -3,7 +3,7 @@ name: Deploy to Preprod Server
 on:
   push:
     tags:
-      - '*#release'
+      - '#release'
 
 jobs:
   create-release:
@@ -18,16 +18,12 @@ jobs:
           git config --global user.name 'github-actions[bot]' 
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Extract version from tag
-        id: extract_version
-        run: echo "::set-output name=VERSION::$(echo ${GITHUB_REF#refs/tags/} | sed 's/#release//')"
-
       - name: Create release branch from dev
         run: |
           git checkout dev
-          git checkout -b release/${{ steps.extract_version.outputs.VERSION }}
-          git commit --allow-empty -m "Préparation de la release ${{ steps.extract_version.outputs.VERSION }}"
-          git push origin release/${{ steps.extract_version.outputs.VERSION }}
+          git checkout -b release
+          git commit --allow-empty -m "Préparation de la release"
+          git push origin release
 
   # test-services:
   #   runs-on: ubuntu-latest
