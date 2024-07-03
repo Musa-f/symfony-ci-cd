@@ -2,30 +2,34 @@ name: Deploy to Preprod Server
 
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - '*#release'
 
 jobs:
-
-  branch_exist:
+  create-release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Fetch all branches
-        run: git fetch origin
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Checkout release branch
-        run: git checkout release
+      - name: Extract version from tag
+        id: extract_version
+        run: echo "::set-output name=VERSION::$(echo ${GITHUB_REF#refs/tags/} | sed 's/#release//')"
 
-      - name: Merge develop into release
-        run: | 
-          git config --global user.email "musaevafatima77@gmail.com"
-          git config --global user.name "musa"
-          git merge develop --allow-unrelated-histories
-          git push origin release
+      - name: Create release branch from dev
+        run: |
+          git checkout dev
+          git checkout -b release/${{ steps.extract_version.outputs.VERSION }}
+          # Effectuez les tests et les corrections nécessaires
+          git commit --allow-empty -m "Préparation de la release ${{ steps.extract_version.outputs.VERSION }}"
+          git push origin release/${{ steps.extract_version.outputs.VERSION }}
+
 
 
   # test-services:
