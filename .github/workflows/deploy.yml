@@ -3,7 +3,7 @@ name: Deploy to Preprod Server
 on:
   push:
     tags:
-      - 'release'
+      - release
 
 jobs:
   create-release:
