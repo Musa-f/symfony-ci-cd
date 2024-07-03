@@ -22,7 +22,7 @@ jobs:
 
       - name: Merge develop into release
         run: |
-          git merge develop
+          git merge develop --allow-unrelated-histories
           git push origin release
 
 
