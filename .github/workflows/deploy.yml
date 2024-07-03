@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  create-release:
+  merge-branch:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,6 +16,9 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Fetch all branches and tags from origin
+        run: git fetch --prune --unshallow
+
       - name: Checkout develop branch
         run: |
           git checkout develop
@@ -24,18 +27,19 @@ jobs:
         run: |
           if git show-ref --verify --quiet refs/heads/release; then
             git checkout release
+            git pull origin release  # Update local release branch
             git merge develop --no-ff -m "Merging changes from develop to release"
           else
-            git checkout -b release
-            git merge develop --no-ff -m "Merging changes from develop to release"
+            git checkout -b release develop
           fi
           
       - name: Push release branch
         env:
           PAT: ${{ secrets.PAT }}
         run: |
-          git remote set-url origin https://x-access-token:${PAT}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://x-access-token:${PAT}@github.com/${{ github.repository }}
           git push origin release
+
 
   # test-services:
   #   runs-on: ubuntu-latest
