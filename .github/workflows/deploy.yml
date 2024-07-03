@@ -7,84 +7,12 @@ on:
 
 jobs:
 
-  test-services:
+  branch_exist:
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Install dependencies
-        uses: php-actions/composer@v6
-
-      - name: Run PHPUnit tests
-        run: php ./vendor/bin/phpunit --testsuite=Services --configuration tests/phpunit.xml
-
-  test-routes:
-    runs-on: ubuntu-latest
-
-    services:
-      mariadb:
-        image: mariadb:10.5
-        env:
-          MARIADB_ROOT_PASSWORD: root
-          MARIADB_DATABASE: symfony_test
-          MARIADB_USER: symfony
-          MARIADB_PASSWORD: symfony
-        ports:
-          - 3306:3306
-        options: >-
-          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-
-      - name: Start MariaDB
-        run: |
-          for i in `seq 1 30`; do
-            if mysqladmin ping -h "127.0.0.1" --silent; then
-              echo "MariaDB is ready!"
-              break
-            fi
-            echo 'Waiting for MariaDB...'
-            sleep 2
-          done
-
-      - name: Install dependencies
-        uses: php-actions/composer@v6
-
-      - name: Prepare database
-        env:
-          DATABASE_URL: mysql://symfony:symfony@127.0.0.1:3306/symfony_test
-        run: |
-          php bin/console doctrine:schema:update --force
-          php bin/console doctrine:fixtures:load --no-interaction
-
-      - name: Run PHPUnit tests
-        run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml
-
-  merge:
-    needs: [test-services, test-routes]
-    runs-on: ubuntu-latest
-    if: success()
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 
 
       - name: Fetch all branches
         run: git fetch origin
@@ -92,10 +20,96 @@ jobs:
       - name: Checkout release branch
         run: git checkout -b release origin/release
 
-      - name: Merge develop into release
-        run: |
-          git merge develop
-          git push origin release
+
+  # test-services:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: '8.2'
+
+  #     - name: Install dependencies
+  #       uses: php-actions/composer@v6
+
+  #     - name: Run PHPUnit tests
+  #       run: php ./vendor/bin/phpunit --testsuite=Services --configuration tests/phpunit.xml
+
+  # test-routes:
+  #   runs-on: ubuntu-latest
+
+  #   services:
+  #     mariadb:
+  #       image: mariadb:10.5
+  #       env:
+  #         MARIADB_ROOT_PASSWORD: root
+  #         MARIADB_DATABASE: symfony_test
+  #         MARIADB_USER: symfony
+  #         MARIADB_PASSWORD: symfony
+  #       ports:
+  #         - 3306:3306
+  #       options: >-
+  #         --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+  #         --health-interval=10s
+  #         --health-timeout=5s
+  #         --health-retries=3
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+
+  #     - name: Setup PHP
+  #       uses: shivammathur/setup-php@v2
+  #       with:
+  #         php-version: '8.2'
+
+  #     - name: Start MariaDB
+  #       run: |
+  #         for i in `seq 1 30`; do
+  #           if mysqladmin ping -h "127.0.0.1" --silent; then
+  #             echo "MariaDB is ready!"
+  #             break
+  #           fi
+  #           echo 'Waiting for MariaDB...'
+  #           sleep 2
+  #         done
+
+  #     - name: Install dependencies
+  #       uses: php-actions/composer@v6
+
+  #     - name: Prepare database
+  #       env:
+  #         DATABASE_URL: mysql://symfony:symfony@127.0.0.1:3306/symfony_test
+  #       run: |
+  #         php bin/console doctrine:schema:update --force
+  #         php bin/console doctrine:fixtures:load --no-interaction
+
+  #     - name: Run PHPUnit tests
+  #       run: php ./vendor/bin/phpunit --testsuite=Controllers --configuration tests/phpunit.xml
+
+  # merge:
+  #   needs: [test-services, test-routes]
+  #   runs-on: ubuntu-latest
+  #   if: success()
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0 
+
+  #     - name: Fetch all branches
+  #       run: git fetch origin
+
+  #     - name: Checkout release branch
+  #       run: git checkout -b release origin/release
+
+  #     - name: Merge develop into release
+  #       run: |
+  #         git merge develop
+  #         git push origin release
 
 
 
