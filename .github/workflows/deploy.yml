@@ -133,6 +133,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
+          git checkout release
           docker build -t alievna/ressources-relationnelles:${GITHUB_SHA} -f ./docker/Dockerfile .
           docker push alievna/ressources-relationnelles:${GITHUB_SHA}
 
