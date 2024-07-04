@@ -11,6 +11,6 @@ class IndexController extends AbstractController
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(): JsonResponse
     {
-        return $this->json("API Ressources Relationnelles");
+        return $this->json("API (Re)ssources relationnelles");
     }
 }
