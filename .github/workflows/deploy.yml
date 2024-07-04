@@ -135,6 +135,7 @@ jobs:
         run: |
           git fetch
           git checkout release
+          git pull origin release 
           docker build -t alievna/ressources-relationnelles:${GITHUB_SHA} -f ./docker/Dockerfile .
           docker push alievna/ressources-relationnelles:${GITHUB_SHA}
 
