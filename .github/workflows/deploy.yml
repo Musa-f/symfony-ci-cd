@@ -135,7 +135,6 @@ jobs:
         run: |
           git fetch
           git checkout release
-          git pull origin release 
           docker build -t alievna/ressources-relationnelles:${GITHUB_SHA} -f ./docker/Dockerfile .
           docker push alievna/ressources-relationnelles:${GITHUB_SHA}
 
@@ -153,5 +152,5 @@ jobs:
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
             cd symfony-ci-cd/docker
-            docker pull alievna/ressources-relationnelles:${GITHUB_SHA}
+            docker pull alievna/ressources-relationnelles:latest
             docker compose up -d
