@@ -135,8 +135,8 @@ jobs:
         run: |
           git fetch
           git checkout release
-          docker build -t alievna/ressources-relationnelles:latest -f ./docker/Dockerfile .
-          docker push alievna/ressources-relationnelles:latest
+          docker build -t alievna/ressources-relationnelles:${GITHUB_SHA} -f ./docker/Dockerfile .
+          docker push alievna/ressources-relationnelles:${GITHUB_SHA}
 
   update-server:
     runs-on: ubuntu-latest
